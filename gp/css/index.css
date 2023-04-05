@@ -1,0 +1,133 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.subcontent{
+    margin-top:55px;
+    width: 90%;
+}
+
+.announcement{
+    width: 100%;
+    background-color: rgb(215, 212, 212);
+}
+
+#carousel1{
+    width: 400px;
+    height: 50px;
+
+}
+
+.cl,.cr{
+    background-color: rgb(215, 212, 212);
+    z-index: 1;
+}
+
+
+.carousel-item>p{
+    text-align: center;
+    padding-top: 15px;
+}
+
+#carouselExampleIndicators{
+    border: 1px solid black;
+    max-height:600px;
+}
+
+#carouselExampleIndicators img{
+    height: 600px;
+    object-position: top;
+    object-fit:cover;
+}
+
+.gallery{
+    margin-top: 100px;
+}
+
+.gallery img{
+    width:100%;
+    height: 400px;
+}
+
+div[class ^="col-sm-"]{
+    padding: 2px;
+}
+
+div[class ^="col-sm-"]>img{
+    margin: 0px;
+    padding: 0px;
+}
+
+.gallery_detail{
+    color: #fff9f9;
+    z-index: 1;
+    position:absolute;
+    top:30%;
+    left: 20%;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #0b0b0b;
+}
+
+.gallery_button{
+    position:absolute;
+    top:80%;
+    left: 70%;
+}
+
+.gallery_button,.gallery_detail{
+    transition: .5s ease;
+    opacity: 0;
+}
+
+.gallery_item:hover .overlay{
+    opacity: 0.3;
+}
+
+.gallery_item:hover .gallery_button{
+    opacity: 1;
+}
+.gallery_item:hover .gallery_detail{
+    opacity: 1;
+}
+
+.scrolling-wrapper{
+	overflow-x: auto;
+}
+
+h4{
+    font-weight: bolder;
+}
+
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #a8bbbf;
+}
+
+

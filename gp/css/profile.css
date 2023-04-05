@@ -1,0 +1,22 @@
+*{
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+}
+
+h3{
+    margin-bottom: 20px;
+}
+
+.subcontent{
+    width: 70%;
+    margin-top:50px ;   
+}
+
+table{
+    margin-top: 10px;
+}
+
+.uinfo{
+    margin-bottom: 70px;
+}
