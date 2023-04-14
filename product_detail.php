@@ -1,5 +1,5 @@
 <?php session_start();
-require 'config.php'
+require 'PHPutility/config.php'
 ?>
 <!DOCTYPE html>
 <html>
