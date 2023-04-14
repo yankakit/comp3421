@@ -53,7 +53,7 @@ require_once('PHPutility/config.php');
 						<h5>Payment Details</h5>
 					</div>
 					<div class="card-body">
-						<form action="PHPutility/handlePayment.php" method="POST">
+						<form action="handlePayment.php" method="POST">
 							<div class="form-group">
 								<label for="card-number">Card Number</label>
 								<input type="text" class="form-control" id="card-number" placeholder="Enter card number">
