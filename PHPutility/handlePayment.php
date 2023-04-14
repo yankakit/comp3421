@@ -23,5 +23,5 @@ require_once('config.php');
     setcookie("product",json_encode($_SESSION["product"]),time()-3600,"/Group-Project");
     $db->commit();
     unset($_SESSION["product"]);
-    header("Location: ../index.php?action=1");
+    header("Location: index.php?action=1");
 ?>
