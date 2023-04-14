@@ -1,0 +1,430 @@
+CREATE TABLE `customer` (
+  `customer_id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(64) DEFAULT NULL,
+  `nickname` varchar(64) DEFAULT NULL,
+  `email` varchar(64) DEFAULT NULL,
+  `passwd` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`customer_id`),
+  UNIQUE KEY `username_2` (`username`,`email`),
+  KEY `username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE TABLE `order` (
+  `order_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_date` datetime DEFAULT NULL,
+  `total_amount` decimal(10,2) DEFAULT NULL,
+  `address` varchar(128) DEFAULT NULL,
+  `customer_id` int(11) NOT NULL,
+  PRIMARY KEY (`order_id`),
+  KEY `customer_id` (`customer_id`),
+  CONSTRAINT `order_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+CREATE TABLE `product` (
+  `product_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_name` varchar(128) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `price` decimal(6,1) DEFAULT NULL,
+  `image` varchar(128) DEFAULT NULL,
+  `source` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `order_detail` (
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+   `size_id` int(11) NOT NULL,
+  `quantity` smallint(6) DEFAULT NULL,
+  PRIMARY KEY (`order_id`,`product_id`),
+  KEY `order_detail_ibfk_2` (`product_id`),
+  CONSTRAINT `order_detail_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`),
+  CONSTRAINT `order_detail_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
+  CONSTRAINT `order_detail_ibfk_3` FOREIGN KEY (`size_id`) REFERENCES `size` (`size_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE size (`size_id` int(11) NOT NULL AUTO_INCREMENT,`size_name` VARCHAR(4), PRIMARY KEY (`size_id`));
+
+CREATE TABLE category (`category_id` int(11) NOT NULL AUTO_INCREMENT,`category_name` VARCHAR(32), PRIMARY KEY (`category_id`));
+
+CREATE TABLE size_product (`size_id` int(11),`product_id` int(11),`quantity` INT, PRIMARY KEY(`size_id`,`product_id`));
+ALTER TABLE `size_product` ADD CONSTRAINT FOREIGN KEY (`product_id`) REFERENCES `product`(`product_id`);
+ALTER TABLE `size_product` ADD CONSTRAINT FOREIGN KEY (`size_id`) REFERENCES `size`(`size_id`);
+
+
+CREATE TABLE cat_product (`category_id` int(11),`product_id` int(11), PRIMARY KEY(`category_id`,`product_id`),FOREIGN KEY (`category_id`) REFERENCES `category`(`category_id`),FOREIGN KEY (`product_id`) REFERENCES `product`(`product_id`));
+INSERT INTO `category` (`category_name`) VALUES ('MAN');
+INSERT INTO `category` (`category_name`) VALUES ('WOMAN');
+INSERT INTO `category` (`category_name`) VALUES ('KID');
+INSERT INTO `category` (`category_name`) VALUES ('TOPSELL');
+INSERT INTO `category` (`category_name`) VALUES ('SPECIAL');
+INSERT INTO `category` (`category_name`) VALUES ('SHOES');
+INSERT INTO `category` (`category_name`) VALUES ('BOTTOMS');
+INSERT INTO `category` (`category_name`) VALUES ('OUTERWEAR');
+INSERT INTO `category` (`category_name`) VALUES ('TOPS');
+INSERT INTO `size` (`size_name`) VALUES ('XS');
+INSERT INTO `size` (`size_name`) VALUES ('S');
+INSERT INTO `size` (`size_name`) VALUES ('M');
+INSERT INTO `size` (`size_name`) VALUES ('L');
+INSERT INTO `size` (`size_name`) VALUES ('XL');
+
+
+
+ALTER TABLE order_detail DROP CONSTRAINT order_detail_ibfk_2;
+ALTER TABLE product MODIFY COLUMN product_id INT auto_increment;
+
+ALTER TABLE product AUTO_INCREMENT=1;
+
+
+
+
+
+ALTER TABLE order_detail ADD CONSTRAINT order_detail_ibfk_2 FOREIGN KEY (`product_id`) REFERENCES product (product_id);
+
+INSERT INTO category (category_name) VALUES ('BOYS');
+INSERT INTO category (category_name) VALUES ('GIRLS');
+INSERT INTO category (category_name) VALUES ('SET');
+INSERT INTO category (category_name) VALUES ('DRESS');
+
+
+
+/*kid boys product*/
+
+INSERT INTO product (description, price, image,product_name,source)VALUES("Freshed Flower White Suit","200","images\\kids\\boys\\set1.jpg","Flower White Suit","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("White Suit","200","images\\kids\\boys\\set2.jpg","White Suit","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Brown Suit set","200","images\\kids\\boys\\set3.jpg","Brown Suit set","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("light brown shoes","150","images\\kids\\boys\\shoes\\shoes1.jpg","light brown shoes","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Freshed Flower shoes","150","images\\kids\\boys\\shoes\\shoes2.jpg","Freshed Flower shoes","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Brown shoes","150","images\\kids\\boys\\shoes\\shoes3.jpg","Brown shoes","China");
+
+INSERT INTO cat_product (category_id,product_id) VALUES (12,1);
+INSERT INTO cat_product (category_id,product_id) VALUES (10,1);
+INSERT INTO cat_product (category_id,product_id) VALUES (3,1);
+INSERT INTO cat_product (category_id,product_id) VALUES (12,2);
+INSERT INTO cat_product (category_id,product_id) VALUES (10,2);
+INSERT INTO cat_product (category_id,product_id) VALUES (3,2);
+INSERT INTO cat_product (category_id,product_id) VALUES (12,3);
+INSERT INTO cat_product (category_id,product_id) VALUES (10,3);
+INSERT INTO cat_product (category_id,product_id) VALUES (3,3);
+INSERT INTO cat_product (category_id,product_id) VALUES (6,4);
+INSERT INTO cat_product (category_id,product_id) VALUES (10,4);
+INSERT INTO cat_product (category_id,product_id) VALUES (3,4);
+INSERT INTO cat_product (category_id,product_id) VALUES (6,5);
+INSERT INTO cat_product (category_id,product_id) VALUES (10,5);
+INSERT INTO cat_product (category_id,product_id) VALUES (3,5);
+INSERT INTO cat_product (category_id,product_id) VALUES (6,6);
+INSERT INTO cat_product (category_id,product_id) VALUES (10,6);
+INSERT INTO cat_product (category_id,product_id) VALUES (3,6);
+
+/* size quantity*/
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,1,50);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,1,100);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,1,50);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,2,50);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,2,100);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,2,50);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,3,50);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,3,100);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,3,50);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,4,50);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,4,100);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,4,50);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,5,50);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,5,100);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,5,50);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,6,50);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,6,100);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,6,50);
+
+
+
+/*kid girls product*/
+INSERT INTO product (description, price, image,product_name,source)VALUES("Freshed Flower White dress","200","images\\kids\\girls\\dresses\\dress1.jpg","Freshed Flower White dress","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Green dress","200","images\\kids\\girls\\dresses\\dress2.jpg","Green dress","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Pink dress ","200","images\\kids\\girls\\dresses\\dress3.jpg","Pink dress","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Green shoes","150","images\\kids\\girls\\shoes\\shoes1.jpg","Green shoes","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Brown shoes","150","images\\kids\\girls\\shoes\\shoes2.jpg","Brown shoes","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Pink shoes","150","images\\kids\\girls\\shoes\\shoes3.jpg","Pink shoes","China");
+INSERT INTO cat_product (category_id,product_id) VALUES (3,7);
+INSERT INTO cat_product (category_id,product_id) VALUES (11,7);
+INSERT INTO cat_product (category_id,product_id) VALUES (13,7);
+INSERT INTO cat_product (category_id,product_id) VALUES (3,8);
+INSERT INTO cat_product (category_id,product_id) VALUES (11,8);
+INSERT INTO cat_product (category_id,product_id) VALUES (13,8);
+INSERT INTO cat_product (category_id,product_id) VALUES (3,9);
+INSERT INTO cat_product (category_id,product_id) VALUES (11,9);
+INSERT INTO cat_product (category_id,product_id) VALUES (13,9);
+INSERT INTO cat_product (category_id,product_id) VALUES (3,10);
+INSERT INTO cat_product (category_id,product_id) VALUES (6,10);
+INSERT INTO cat_product (category_id,product_id) VALUES (11,10);
+INSERT INTO cat_product (category_id,product_id) VALUES (3,11);
+INSERT INTO cat_product (category_id,product_id) VALUES (6,11);
+INSERT INTO cat_product (category_id,product_id) VALUES (11,11);
+INSERT INTO cat_product (category_id,product_id) VALUES (3,12);
+INSERT INTO cat_product (category_id,product_id) VALUES (6,12);
+INSERT INTO cat_product (category_id,product_id) VALUES (11,12);
+
+/* size quantity */
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,7,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,7,35);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,7,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,8,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,8,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,8,50);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,9,55);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,9,24);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,9,54);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,10,55);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,10,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,10,50);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,11,240);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,11,340);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,11,27);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,12,20);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,12,50);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,12,20);
+
+
+
+/*men bottoms product*/
+INSERT INTO product (description, price, image,product_name,source)VALUES("Browns jeans","300","images\\men\\bottoms\\bottoms1.jpg","Browns jeans","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Khaki jeans","300","images\\men\\bottoms\\bottoms2.jpg","Khaki jeans","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Classic jeans","300","images\\men\\bottoms\\bottoms3.jpg"," Classic jeans","China");
+INSERT INTO cat_product (category_id,product_id) VALUES (1,13);
+INSERT INTO cat_product (category_id,product_id) VALUES (7,13);
+INSERT INTO cat_product (category_id,product_id) VALUES (4,13);
+INSERT INTO cat_product (category_id,product_id) VALUES (1,14);
+INSERT INTO cat_product (category_id,product_id) VALUES (7,14);
+INSERT INTO cat_product (category_id,product_id) VALUES (1,15);
+INSERT INTO cat_product (category_id,product_id) VALUES (7,15);
+/* size quantity */
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,13,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,13,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,13,100);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,13,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,13,20);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,14,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,14,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,14,100);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,14,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,14,20);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,15,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,15,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,15,100);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,15,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,15,20);
+
+/*men outerwear product*/
+INSERT INTO product (description, price, image,product_name,source)VALUES("Men suit 1","350","images\\men\\outerwear\\outerwear1.jpg","Men suit1","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Men suit 2","350","images\\men\\outerwear\\outerwear2.jpg","Men suit2","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Men suit 3","350","images\\men\\outerwear\\outerwear3.jpg","Men suit3","China");
+INSERT INTO cat_product (category_id,product_id) VALUES (1,16);
+INSERT INTO cat_product (category_id,product_id) VALUES (8,16);
+INSERT INTO cat_product (category_id,product_id) VALUES (5,16);
+INSERT INTO cat_product (category_id,product_id) VALUES (1,17);
+INSERT INTO cat_product (category_id,product_id) VALUES (8,17);
+INSERT INTO cat_product (category_id,product_id) VALUES (1,18);
+INSERT INTO cat_product (category_id,product_id) VALUES (8,18);
+
+/* size quantity */
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,16,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,16,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,16,100);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,16,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,16,20);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,17,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,17,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,17,100);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,17,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,17,20);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,18,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,18,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,18,100);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,18,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,18,20);
+
+/*men shoes product*/
+INSERT INTO product (description, price, image,product_name,source)VALUES("Men shoes 1","350","images\\men\\shoes\\shoes1.jpg","Men shoes 1","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Men shoes 2","350","images\\men\\shoes\\shoes2.jpg","Men shoes 2","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Men shoes 3","350","images\\men\\shoes\\shoes3.jpg","Men shoes 3","China");
+INSERT INTO cat_product (category_id,product_id) VALUES (1,19);
+INSERT INTO cat_product (category_id,product_id) VALUES (6,19);
+INSERT INTO cat_product (category_id,product_id) VALUES (1,20);
+INSERT INTO cat_product (category_id,product_id) VALUES (6,20);
+INSERT INTO cat_product (category_id,product_id) VALUES (1,21);
+INSERT INTO cat_product (category_id,product_id) VALUES (6,21);
+/* size quantity */
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,19,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,19,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,19,100);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,19,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,19,20);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,20,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,20,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,20,100);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,20,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,20,20);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,21,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,21,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,21,100);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,21,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,21,20);
+
+
+/*men tops product*/
+INSERT INTO product (description, price, image,product_name,source)VALUES("Men top 1","120","images\\men\\tops\\tops1.jpg","Men top 1","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Men top 2","100","images\\men\\tops\\tops2.jpg","Men top 2","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Men top 3","70","images\\men\\tops\\tops3.jpg","Men top 3","China");
+INSERT INTO cat_product (category_id,product_id) VALUES (1,22);
+INSERT INTO cat_product (category_id,product_id) VALUES (9,22);
+INSERT INTO cat_product (category_id,product_id) VALUES (1,23);
+INSERT INTO cat_product (category_id,product_id) VALUES (9,23);
+INSERT INTO cat_product (category_id,product_id) VALUES (1,24);
+INSERT INTO cat_product (category_id,product_id) VALUES (9,24);
+/* size quantity */
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,22,30);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,22,45);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,22,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,22,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,22,25);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,23,30);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,23,45);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,23,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,23,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,23,25);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,24,30);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,24,45);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,24,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,24,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,24,25);
+
+
+/*women bottoms product*/
+INSERT INTO product (description, price, image,product_name,source)VALUES("Black jeans","350","images\\women\\bottoms\\bottoms1.jpg","Black jeans","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Blue jeans","350","images\\women\\bottoms\\bottoms2.jpg","Blue jeans","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Red jeans","350","images\\women\\bottoms\\bottoms3.jpg"," Red jeans","China");
+INSERT INTO cat_product (category_id,product_id) VALUES (2,25);
+INSERT INTO cat_product (category_id,product_id) VALUES (7,25);
+INSERT INTO cat_product (category_id,product_id) VALUES (2,26);
+INSERT INTO cat_product (category_id,product_id) VALUES (7,26);
+INSERT INTO cat_product (category_id,product_id) VALUES (2,27);
+INSERT INTO cat_product (category_id,product_id) VALUES (7,27);
+/* size quantity */
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,25,30);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,25,45);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,25,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,25,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,25,25);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,26,30);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,26,45);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,26,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,26,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,26,25);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,27,30);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,27,45);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,27,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,27,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,27,25);
+
+/*women outerwear product*/
+INSERT INTO product (description, price, image,product_name,source)VALUES("Women suit 1","200","images\\women\\outerwear\\outerwear1.jpg","Women suit1","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Women suit 2","200","images\\women\\outerwear\\outerwear2.jpg","Women suit2","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Women suit 3","200","images\\women\\outerwear\\outerwear3.jpg","Women suit3","China");
+INSERT INTO cat_product (category_id,product_id) VALUES (2,28);
+INSERT INTO cat_product (category_id,product_id) VALUES (8,28);
+INSERT INTO cat_product (category_id,product_id) VALUES (2,29);
+INSERT INTO cat_product (category_id,product_id) VALUES (8,29);
+INSERT INTO cat_product (category_id,product_id) VALUES (2,30);
+INSERT INTO cat_product (category_id,product_id) VALUES (8,30);
+/* size quantity */
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,28,30);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,28,45);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,28,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,28,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,28,25);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,29,30);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,29,45);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,29,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,29,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,29,25);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,30,30);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,30,45);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,30,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,30,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,30,25);
+
+/*women shoes product*/
+INSERT INTO product (description, price, image,product_name,source)VALUES("Women shoes 1","400","images\\women\\shoes\\shoes1.jpg","Women shoes 1","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Women shoes 2","400","images\\women\\shoes\\shoes2.jpg","Women shoes 2","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Women shoes 3","400","images\\women\\shoes\\shoes3.jpg","Women shoes 3","China");
+INSERT INTO cat_product (category_id,product_id) VALUES (2,31);
+INSERT INTO cat_product (category_id,product_id) VALUES (6,31);
+INSERT INTO cat_product (category_id,product_id) VALUES (2,32);
+INSERT INTO cat_product (category_id,product_id) VALUES (6,32);
+INSERT INTO cat_product (category_id,product_id) VALUES (2,33);
+INSERT INTO cat_product (category_id,product_id) VALUES (6,33);
+/* size quantity */
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,31,30);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,31,45);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,31,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,31,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,31,25);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,32,30);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,32,45);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,32,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,32,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,32,25);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,33,30);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,33,45);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,33,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,33,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,33,25);
+
+/*women tops product*/
+INSERT INTO product (description, price, image,product_name,source)VALUES("Women top 1","120","images\\women\\tops\\top1.jpg","Women top 1","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Women top 2","100","images\\women\\tops\\top2.jpg","Women top 2","China");
+INSERT INTO product (description, price, image,product_name,source)VALUES("Women top 3","70","images\\women\\tops\\top3.jpg","Women top 3","China");
+INSERT INTO cat_product (category_id,product_id) VALUES (2,34);
+INSERT INTO cat_product (category_id,product_id) VALUES (9,34);
+INSERT INTO cat_product (category_id,product_id) VALUES (2,35);
+INSERT INTO cat_product (category_id,product_id) VALUES (9,35);
+INSERT INTO cat_product (category_id,product_id) VALUES (2,36);
+INSERT INTO cat_product (category_id,product_id) VALUES (9,36);
+/* size quantity */
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,34,30);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,34,45);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,34,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,34,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,34,25);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,35,30);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,35,45);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,35,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,35,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,35,25);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (1,36,30);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (2,36,45);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (3,36,70);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (4,36,40);
+INSERT INTO size_product (size_id,product_id,quantity) VALUES (5,36,25);
+
+
+/* TOPSELL */
+INSERT INTO cat_product (category_id,product_id) VALUES (4,7);
+INSERT INTO cat_product (category_id,product_id) VALUES (4,16);
+INSERT INTO cat_product (category_id,product_id) VALUES (4,19);
+INSERT INTO cat_product (category_id,product_id) VALUES (4,24);
+INSERT INTO cat_product (category_id,product_id) VALUES (4,28);
+INSERT INTO cat_product (category_id,product_id) VALUES (4,33);
+
+/* SPECIAL */
+INSERT INTO cat_product (category_id,product_id) VALUES (5,4);
+INSERT INTO cat_product (category_id,product_id) VALUES (5,9);
+INSERT INTO cat_product (category_id,product_id) VALUES (5,10);
+INSERT INTO cat_product (category_id,product_id) VALUES (5,25);
+INSERT INTO cat_product (category_id,product_id) VALUES (5,26);
+INSERT INTO cat_product (category_id,product_id) VALUES (5,32);
+
+
+
