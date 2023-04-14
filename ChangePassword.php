@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'PHPutility/config.php';
+require 'config.php';
 // Get input values from the form
 
 
