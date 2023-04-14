@@ -1,0 +1,45 @@
+
+
+.product_sub{
+    margin-top:55px ;
+    width: 90%;
+    padding: 15px;
+    height: fit-content;
+}
+.product_header{
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    align-items: baseline;
+}
+.product_cat{
+    height: 700px;
+    overflow-y: scroll;
+    margin-bottom: 50px;
+    margin-top: 20px;
+}
+.row{
+    overflow-y: scroll;
+    margin-top: 20px;
+}
+
+.products{
+    margin-top: 30px;
+}
+
+.product{
+    width: 100%;
+    height: 100%;
+}
+
+.sort{
+    margin-left: auto;
+}
+.sort label{
+    font-weight: bolder;
+}
+
+.productIItem{
+    margin-top: 20px;
+}
+

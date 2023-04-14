@@ -1,0 +1,23 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.content{
+    display: flex;
+    justify-content: center;
+}
+
+.uinfo{
+    margin-bottom: 70px;
+}
+
+.subcontent{
+    margin-top: 100px;
+    width: 50%;
+}
+
+.historyGroup{
+    height: 160px !important;
+    width: 100%;
+}
